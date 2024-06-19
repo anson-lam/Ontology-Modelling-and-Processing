@@ -1,0 +1,611 @@
+@prefix : <http://www.semanticweb.org/anson/ontologies/2024/1/untitled-ontology-13/> .
+@prefix as: <http://www.city.ac.uk/inm713-in3067/2024/as/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/anson/ontologies/2024/1/untitled-ontology-13/> .
+
+<http://www.city.ac.uk/inm713-in3067/2024/as/> rdf:type owl:Ontology ;
+                                                <http://purl.org/dc/elements/1.1/creator> """Anson - Kai Sun Anson Lam
+Sepideh - Sepideh Kelishadi""" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasCurrency
+as:hasCurrency rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf as:hasItemDetails ;
+               rdfs:domain as:MenuItem ;
+               rdfs:range as:Currency .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasIngredient
+as:hasIngredient rdf:type owl:ObjectProperty ;
+                 owl:inverseOf as:isIngredientOf ;
+                 rdf:type owl:TransitiveProperty ;
+                 rdfs:domain as:Food ;
+                 rdfs:range as:Food .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasItemDescription
+as:hasItemDescription rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf as:hasItemDetails ;
+                      rdfs:domain as:MenuItem ;
+                      rdfs:range as:ItemDescription .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasItemDetails
+as:hasItemDetails rdf:type owl:ObjectProperty ;
+                  rdfs:domain as:MenuItem ;
+                  rdfs:range as:ItemDetails .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasItemValue
+as:hasItemValue rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf as:hasItemDetails ;
+                rdfs:domain as:MenuItem ;
+                rdfs:range as:ItemValue .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasMenuItem
+as:hasMenuItem rdf:type owl:ObjectProperty ;
+               rdfs:domain as:NamedRestaurant ;
+               rdfs:range as:MenuItem .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasPizzaBase
+as:hasPizzaBase rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf as:hasIngredient ;
+                owl:inverseOf as:isPizzaBaseOf ;
+                rdf:type owl:FunctionalProperty ,
+                         owl:InverseFunctionalProperty ;
+                rdfs:domain as:Pizza ;
+                rdfs:range as:PizzaBase .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasPizzaTopping
+as:hasPizzaTopping rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf as:hasIngredient ;
+                   owl:inverseOf as:isPizzaToppingOf ;
+                   rdf:type owl:InverseFunctionalProperty ;
+                   rdfs:domain as:Pizza ;
+                   rdfs:range as:PizzaTopping .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasRestaurantCategory
+as:hasRestaurantCategory rdf:type owl:ObjectProperty ;
+                         rdfs:domain as:NamedRestaurant ;
+                         rdfs:range as:CategorisedRestaurant .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/hasSize
+as:hasSize rdf:type owl:ObjectProperty ;
+           rdfs:range as:Size .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/isIngredientOf
+as:isIngredientOf rdf:type owl:ObjectProperty ,
+                           owl:TransitiveProperty ;
+                  rdfs:domain as:Food ;
+                  rdfs:range as:Food .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/isLocatedIn
+as:isLocatedIn rdf:type owl:ObjectProperty ,
+                        owl:TransitiveProperty ;
+               rdfs:domain as:Location ;
+               rdfs:range as:Location .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/isPizzaBaseOf
+as:isPizzaBaseOf rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf as:isIngredientOf ;
+                 rdf:type owl:FunctionalProperty ,
+                          owl:InverseFunctionalProperty ;
+                 rdfs:domain as:PizzaBase ;
+                 rdfs:range as:Pizza .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/isPizzaToppingOf
+as:isPizzaToppingOf rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf as:isIngredientOf ;
+                    rdf:type owl:FunctionalProperty ;
+                    rdfs:domain as:PizzaTopping ;
+                    rdfs:range as:Pizza .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Address
+as:Address rdf:type owl:Class ;
+           rdfs:subClassOf as:Location ;
+           rdfs:label "Address" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/American
+as:American rdf:type owl:Class ;
+            rdfs:subClassOf as:NamedPizza ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasPizzaTopping ;
+                              owl:someValuesFrom as:MozzarellaTopping
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasPizzaTopping ;
+                              owl:someValuesFrom as:PeperoniTopping
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasPizzaTopping ;
+                              owl:someValuesFrom as:TomatoTopping
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasPizzaTopping ;
+                              owl:allValuesFrom [ rdf:type owl:Class ;
+                                                  owl:unionOf ( as:MozzarellaTopping
+                                                                as:PeperoniTopping
+                                                                as:TomatoTopping
+                                                              )
+                                                ]
+                            ] ;
+            rdfs:label "American"@en ,
+                       "Americana"@pt .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/AmericanRestaurant
+as:AmericanRestaurant rdf:type owl:Class ;
+                      rdfs:subClassOf as:CategorisedRestaurant ;
+                      rdfs:label "AmericanRestaurant" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/BBQSauce
+as:BBQSauce rdf:type owl:Class ;
+            rdfs:subClassOf as:SauceTopping ;
+            rdfs:label "BBQSauce" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/CategorisedRestaurant
+as:CategorisedRestaurant rdf:type owl:Class ;
+                         rdfs:subClassOf as:Restaurant ;
+                         rdfs:label "CategorisedRestaurant" ,
+                                    "RestaurantCategory" ,
+                                    "RestaurantType" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/CheeseTopping
+as:CheeseTopping rdf:type owl:Class ;
+                 rdfs:subClassOf as:PizzaTopping ;
+                 rdfs:label "CheeseTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/City
+as:City rdf:type owl:Class ;
+        rdfs:subClassOf as:Location ;
+        rdfs:label "City" ,
+                   "Town" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Country
+as:Country rdf:type owl:Class ;
+           rdfs:subClassOf as:Location ;
+           rdfs:label "Country" ,
+                      "Nation" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Currency
+as:Currency rdf:type owl:Class ;
+            rdfs:subClassOf as:ItemDetails ;
+            rdfs:label "Currency" ,
+                       "ItemCurrency" ,
+                       "PriceCurrency" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/DeepPanBase
+as:DeepPanBase rdf:type owl:Class ;
+               rdfs:subClassOf as:PizzaBase ;
+               rdfs:label "DeepPanBase" ,
+                          "ThickBase" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Food
+as:Food rdf:type owl:Class ;
+        rdfs:subClassOf as:MenuItem ;
+        rdfs:label "Food" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/FruitTopping
+as:FruitTopping rdf:type owl:Class ;
+                rdfs:subClassOf as:PizzaTopping ;
+                rdfs:label "FruitTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/HamTopping
+as:HamTopping rdf:type owl:Class ;
+              rdfs:subClassOf as:MeatTopping ;
+              rdfs:label "HamTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ItalianRestaurant
+as:ItalianRestaurant rdf:type owl:Class ;
+                     rdfs:subClassOf as:CategorisedRestaurant ;
+                     rdfs:label "ItalianRestaurant" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ItemDescription
+as:ItemDescription rdf:type owl:Class ;
+                   rdfs:subClassOf as:ItemDetails ;
+                   rdfs:label "Description" ,
+                              "ItemDescription" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ItemDetails
+as:ItemDetails rdf:type owl:Class ;
+               rdfs:label "ItemDetail" ,
+                          "ItemDetails" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ItemValue
+as:ItemValue rdf:type owl:Class ;
+             rdfs:subClassOf as:ItemDetails ;
+             rdfs:label "ItemValue" ,
+                        "PriceValue" ,
+                        "Value" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/LargeSize
+as:LargeSize rdf:type owl:Class ;
+             rdfs:subClassOf as:Size ;
+             owl:disjointWith as:MediumSize ,
+                              as:SmallSize ;
+             rdfs:label "LargeSize" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Location
+as:Location rdf:type owl:Class ;
+            rdfs:label "Location" ,
+                       "Place" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Margherita
+as:Margherita rdf:type owl:Class ;
+              rdfs:subClassOf as:NamedPizza ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty as:hasPizzaTopping ;
+                                owl:someValuesFrom as:MozzarellaTopping
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty as:hasPizzaTopping ;
+                                owl:someValuesFrom as:TomatoTopping
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty as:hasPizzaTopping ;
+                                owl:allValuesFrom [ rdf:type owl:Class ;
+                                                    owl:unionOf ( as:MozzarellaTopping
+                                                                  as:TomatoTopping
+                                                                )
+                                                  ]
+                              ] ;
+              rdfs:label "Margherita"@en ,
+                         "Margherita"@pt .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/MeatTopping
+as:MeatTopping rdf:type owl:Class ;
+               rdfs:subClassOf as:PizzaTopping ;
+               rdfs:label "MeatTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/MeatyPizza
+as:MeatyPizza rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( as:Pizza
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty as:hasPizzaTopping ;
+                                                           owl:someValuesFrom as:MeatTopping
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf as:Pizza ;
+              rdfs:comment "A pizza with some meat toppings." ;
+              rdfs:label "MeatyPizza" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/MediumSize
+as:MediumSize rdf:type owl:Class ;
+              rdfs:subClassOf as:Size ;
+              owl:disjointWith as:SmallSize ;
+              rdfs:label "MediumSize" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/MenuItem
+as:MenuItem rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasCurrency ;
+                              owl:someValuesFrom as:Currency
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasItemDescription ;
+                              owl:someValuesFrom as:ItemDescription
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasItemDetails ;
+                              owl:someValuesFrom as:ItemDetails
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty as:hasItemValue ;
+                              owl:someValuesFrom as:ItemValue
+                            ] ;
+            rdfs:label "MenuItem" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/MozzarellaTopping
+as:MozzarellaTopping rdf:type owl:Class ;
+                     rdfs:subClassOf as:CheeseTopping ;
+                     rdfs:label "MozzarellaTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/NamedPizza
+as:NamedPizza rdf:type owl:Class ;
+              rdfs:subClassOf as:Pizza ;
+              rdfs:comment "A pizza with a specific name." ;
+              rdfs:label "NamedPizza" ,
+                         "PizzaName" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/NamedRestaurant
+as:NamedRestaurant rdf:type owl:Class ;
+                   rdfs:subClassOf as:Restaurant ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:hasMenuItem ;
+                                     owl:someValuesFrom as:MenuItem
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:hasRestaurantCategory ;
+                                     owl:someValuesFrom as:CategorisedRestaurant
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:isLocatedIn ;
+                                     owl:someValuesFrom as:Address
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:isLocatedIn ;
+                                     owl:someValuesFrom as:City
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:isLocatedIn ;
+                                     owl:someValuesFrom as:Country
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:isLocatedIn ;
+                                     owl:someValuesFrom as:Postcode
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty as:isLocatedIn ;
+                                     owl:someValuesFrom as:State
+                                   ] ;
+                   rdfs:label "NamedRestaurant" ,
+                              "RestaurantName" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/NonVegetarianPizza
+as:NonVegetarianPizza rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( as:Pizza
+                                                                 [ rdf:type owl:Class ;
+                                                                   owl:complementOf as:VegetarianPizza
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf as:Pizza ;
+                      owl:disjointWith as:VegetarianPizza ;
+                      rdfs:comment "A pizza which is not a vegetarian pizza." ;
+                      rdfs:label "NonVegetarianPizza" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PeperoniTopping
+as:PeperoniTopping rdf:type owl:Class ;
+                   rdfs:subClassOf as:MeatTopping ;
+                   rdfs:label "PeperoniTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PineappleTopping
+as:PineappleTopping rdf:type owl:Class ;
+                    rdfs:subClassOf as:FruitTopping ;
+                    rdfs:label "PineappleTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Pizza
+as:Pizza rdf:type owl:Class ;
+         rdfs:subClassOf as:Food ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty as:hasPizzaBase ;
+                           owl:someValuesFrom as:PizzaBase
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty as:hasPizzaTopping ;
+                           owl:someValuesFrom as:PizzaTopping
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty as:hasSize ;
+                           owl:someValuesFrom as:Size
+                         ] ;
+         rdfs:label "Pizza" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PizzaBase
+as:PizzaBase rdf:type owl:Class ;
+             rdfs:subClassOf as:Food ;
+             rdfs:label "PizzaBase" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PizzaDaAS
+as:PizzaDaAS rdf:type owl:Class ;
+             rdfs:subClassOf as:NamedPizza ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:BBQSauce
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:HamTopping
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:MozzarellaTopping
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:PeperoniTopping
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:PineappleTopping
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:someValuesFrom as:TomatoTopping
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty as:hasPizzaTopping ;
+                               owl:allValuesFrom [ rdf:type owl:Class ;
+                                                   owl:unionOf ( as:BBQSauce
+                                                                 as:HamTopping
+                                                                 as:MozzarellaTopping
+                                                                 as:PeperoniTopping
+                                                                 as:PineappleTopping
+                                                                 as:TomatoTopping
+                                                               )
+                                                 ]
+                             ] ;
+             rdfs:label "PizzaDaAS" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PizzaPlace
+as:PizzaPlace rdf:type owl:Class ;
+              rdfs:subClassOf as:CategorisedRestaurant ;
+              rdfs:label "PizzaPlace" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PizzaTopping
+as:PizzaTopping rdf:type owl:Class ;
+                rdfs:subClassOf as:Food ;
+                rdfs:label "PizzaTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/PizzeriaDaAS
+as:PizzeriaDaAS rdf:type owl:Class ;
+                rdfs:subClassOf as:CategorisedRestaurant ;
+                rdfs:label "PizzeriaDaAS" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Postcode
+as:Postcode rdf:type owl:Class ;
+            rdfs:subClassOf as:Location ;
+            rdfs:label "Postcode" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Restaurant
+as:Restaurant rdf:type owl:Class ;
+              rdfs:subClassOf as:Location ;
+              rdfs:label "Restaurant" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/SauceTopping
+as:SauceTopping rdf:type owl:Class ;
+                rdfs:subClassOf as:PizzaTopping ;
+                rdfs:label "SauceTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/Size
+as:Size rdf:type owl:Class ;
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:unionOf ( as:LargeSize
+                                            as:MediumSize
+                                            as:SmallSize
+                                          )
+                            ] ;
+        rdfs:subClassOf as:ValuePartition ;
+        rdfs:label "Size" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/SmallSize
+as:SmallSize rdf:type owl:Class ;
+             rdfs:subClassOf as:Size ;
+             rdfs:label "SmallSize" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/State
+as:State rdf:type owl:Class ;
+         rdfs:subClassOf as:Location ;
+         rdfs:label "Borough" ,
+                    "State" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ThinAndCripsyBase
+as:ThinAndCripsyBase rdf:type owl:Class ;
+                     rdfs:subClassOf as:PizzaBase ;
+                     rdfs:label "ThinAndCrispyBase" ,
+                                "ThinBase" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/TomatoTopping
+as:TomatoTopping rdf:type owl:Class ;
+                 rdfs:subClassOf as:VegetableTopping ;
+                 rdfs:label "TomatoTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/ValuePartition
+as:ValuePartition rdf:type owl:Class ;
+                  rdfs:label "ValuePartition" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/VegetableTopping
+as:VegetableTopping rdf:type owl:Class ;
+                    rdfs:subClassOf as:PizzaTopping ;
+                    rdfs:label "VegatableTopping" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/VegetarianPizza
+as:VegetarianPizza rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( as:Pizza
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty as:hasPizzaTopping ;
+                                                                owl:allValuesFrom as:VegetarianTopping
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf as:Pizza ;
+                   rdfs:comment "A pizza with only vegetarian toppings." ;
+                   rdfs:label "VegetarianPizza" .
+
+
+###  http://www.city.ac.uk/inm713-in3067/2024/as/VegetarianTopping
+as:VegetarianTopping rdf:type owl:Class ;
+                     rdfs:subClassOf [ owl:intersectionOf ( as:PizzaTopping
+                                                            [ rdf:type owl:Class ;
+                                                              owl:unionOf ( as:CheeseTopping
+                                                                            as:FruitTopping
+                                                                            as:SauceTopping
+                                                                            as:VegetableTopping
+                                                                          )
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] ;
+                     rdfs:comment "A pizza topping which is either a cheese, fruit, sauce, or vegetable topping." ;
+                     rdfs:label "VegetarianTopping" .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
